@@ -1,0 +1,51 @@
+{
+    // Each lab is a folder with its own Makefile; these act on the lab whose
+    // file is focused in the editor (CCS's "active project").
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make",
+            "args": ["-C", "${fileDirname}"],
+            "group": { "kind": "build", "isDefault": true },
+            "problemMatcher": [
+                // Preprocessor errors in .S files, e.g. a bad #include.
+                { "base": "$gcc", "fileLocation": ["relative", "${fileDirname}"] },
+                {
+                    // GNU as: "main.S:54: Error: bad instruction `mulx r8,r6,r7'"
+                    "owner": "gas",
+                    "fileLocation": ["relative", "${fileDirname}"],
+                    "pattern": {
+                        "regexp": "^(.*?):(\\d+): (Error|Warning): (.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "severity": 3,
+                        "message": 4
+                    }
+                }
+            ]
+        },
+        {
+            "label": "xds100v2: clear power-loss flag",
+            "type": "process",
+            "command": "openocd",
+            "args": ["-f", "${workspaceFolder}/common/xds100v2-clear-power-loss.cfg"],
+            "problemMatcher": []
+        },
+        {
+            // launch.json's preLaunchTask.
+            "label": "prepare debug",
+            "dependsOrder": "sequence",
+            "dependsOn": ["build", "xds100v2: clear power-loss flag"],
+            "problemMatcher": []
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "make",
+            "args": ["-C", "${fileDirname}", "clean"],
+            "problemMatcher": []
+        }
+    ]
+}

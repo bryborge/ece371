@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // Debugs the lab whose file is focused; expects the lab's Makefile
+            // to build build/<lab folder name>.elf.
+            "name": "BBB: debug lab (XDS100v2)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${fileDirname}",
+            "executable": "${fileDirname}/build/${fileDirnameBasename}.elf",
+            "configFiles": ["${workspaceFolder}/common/bbb-xds100v2.cfg"],
+            "gdbPath": "gdb-multiarch",
+            // Builds, then clears the probe's power-loss flag so OpenOCD's
+            // first JTAG scan succeeds (see xds100v2-clear-power-loss.cfg).
+            "preLaunchTask": "prepare debug",
+            // Cortex-Debug's default is reset, load, reset, and resetting this
+            // board through the XDS100v2 loses the debugger (bbb-xds100v2.cfg).
+            // Instead: bbb_init halts and does the GEL's work; GDB's register
+            // cache predates it, so flush it; load writes the ELF into DDR and
+            // sets PC to _start, where the session stops.
+            // Semihosting (svc 0x123456, rdimon.specs) is what the course
+            // templates print with.
+            "overrideLaunchCommands": [
+                "monitor bbb_init",
+                "maintenance flush register-cache",
+                "monitor arm semihosting enable",
+                "load"
+            ],
+            "overrideResetCommands": [
+                "monitor bbb_init",
+                "maintenance flush register-cache",
+                "load"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+{
+    // Cortex-Debug pulls in its mcu-debug.* companions (memory view etc.).
+    "recommendations": ["marus25.cortex-debug", "dan-c-underwood.arm"]
+}
