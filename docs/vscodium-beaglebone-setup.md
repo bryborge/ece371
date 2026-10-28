@@ -223,7 +223,37 @@ Lab 0 never calls `svc`, so for Lab 0 this changes nothing.
    which play the role of the GEL Output tab.
 6. Set breakpoints in the gutter, then use **Continue (F5)** and **Step
    Over (F10)**.
-7. Stop with **Shift+F5** before unplugging anything (tutorial §6, Step 22).
+7. When you're done, shut down in the order below.
+
+### Shutting down
+
+This follows tutorial §6, Step 22, in the same order.
+
+1. **Stop the debug session**: **Shift+F5**, or the Stop button on the debug
+   toolbar. This also shuts down the OpenOCD that Cortex-Debug started. If
+   you ran OpenOCD and GDB by hand, `quit` GDB (answer `y`) and press
+   **Ctrl+C** in the OpenOCD terminal.
+2. **Check that nothing still holds the probe**:
+
+   ```sh
+   pgrep -a openocd || echo "no openocd running"
+   ```
+
+   If an `openocd` process is listed, the session didn't shut down cleanly.
+   End it with `pkill openocd`.
+3. **Remove the board's power** (its USB cable or 5 V supply). In
+   bare-metal mode this is safe at any time, because only the boot ROM and
+   your program are running and neither writes to the eMMC. If the USR LEDs
+   are blinking, Linux is running instead: press **S3** once and wait for
+   all the LEDs to go out before pulling power (tutorial §2), or you risk
+   corrupting the eMMC.
+4. **Unplug the XDS100v2's USB cable**, and the JTAG ribbon if you're
+   packing up.
+
+Pulling the probe in the middle of a session doesn't damage anything, but
+the session dies with JTAG errors and may need the probe replugged. That's
+why step 1 comes first. Powering the board off sets the probe's power-loss
+flag, which the next F5 clears automatically (§4).
 
 ### Where the CCS views are
 
