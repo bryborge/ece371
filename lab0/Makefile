@@ -1,4 +1,5 @@
-PROJ  := Lab0_ArrayMultiply
+# launch.json debugs build/<folder name>.elf, so the name comes from the folder.
+PROJ  := $(notdir $(CURDIR))
 CC    := arm-none-eabi-gcc
 BUILD := build
 ELF   := $(BUILD)/$(PROJ).elf
