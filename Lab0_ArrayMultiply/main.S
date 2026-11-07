@@ -5,7 +5,6 @@
 @ Douglas V. Hall / PSU ECE 371/372
 
 .syntax unified
-.text
 .code 32
 .global _start
 .global NEXT
