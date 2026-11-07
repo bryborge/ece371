@@ -1,11 +1,13 @@
 @ Array Multiply Program
+@
 @ Multiplies halfwords from MULTIPLICANDS by MULTIPLIERS
 @ and stores results in PRODUCTS array.
+@
 @ Uses R1-R4, R6-R8
+@
 @ Douglas V. Hall / PSU ECE 371/372
 
 .syntax unified
-.text
 .code 32
 .global _start
 .global NEXT

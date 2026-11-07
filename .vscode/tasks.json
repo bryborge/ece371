@@ -10,10 +10,8 @@
             "args": ["-C", "${fileDirname}"],
             "group": { "kind": "build", "isDefault": true },
             "problemMatcher": [
-                // Preprocessor errors in .S files, e.g. a bad #include.
-                { "base": "$gcc", "fileLocation": ["relative", "${fileDirname}"] },
                 {
-                    // GNU as: "main.S:54: Error: bad instruction `mulx r8,r6,r7'"
+                    // GNU as: "main.s:54: Error: bad instruction `mulx r8,r6,r7'"
                     "owner": "gas",
                     "fileLocation": ["relative", "${fileDirname}"],
                     "pattern": {
