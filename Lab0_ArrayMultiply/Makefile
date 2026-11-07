@@ -6,7 +6,7 @@ ELF   := $(BUILD)/$(PROJ).elf
 CPUFLAGS := -mcpu=cortex-a8 -marm
 ASFLAGS  := $(CPUFLAGS) -g -Wa,-adhlns=$(BUILD)/$(PROJ).lst
 # -nostdlib implies the tutorial's -nostartfiles and also drops libc/libgcc,
-# which pure assembly never calls: main.S owns reset, vectors and SP.
+# which pure assembly never calls: main.s owns reset, vectors and SP.
 # AM335x.lds is the course template's, which sizes the stack and heap from
 # these symbols; the values are the wizard's (its .cproject DEFSYM list).
 LDFLAGS  := -nostdlib -T AM335x.lds -Wl,-Map=$(BUILD)/$(PROJ).map \
@@ -16,8 +16,8 @@ LDFLAGS  := -nostdlib -T AM335x.lds -Wl,-Map=$(BUILD)/$(PROJ).map \
 
 all: $(ELF)
 
-$(ELF): main.S AM335x.lds | $(BUILD)
-	$(CC) $(ASFLAGS) $(LDFLAGS) -o $@ main.S
+$(ELF): main.s AM335x.lds | $(BUILD)
+	$(CC) $(ASFLAGS) $(LDFLAGS) -o $@ main.s
 
 $(BUILD):
 	mkdir -p $@

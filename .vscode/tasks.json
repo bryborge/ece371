@@ -11,7 +11,7 @@
             "group": { "kind": "build", "isDefault": true },
             "problemMatcher": [
                 {
-                    // GNU as: "main.S:54: Error: bad instruction `mulx r8,r6,r7'"
+                    // GNU as: "main.s:54: Error: bad instruction `mulx r8,r6,r7'"
                     "owner": "gas",
                     "fileLocation": ["relative", "${fileDirname}"],
                     "pattern": {
